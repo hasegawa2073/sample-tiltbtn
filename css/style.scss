@@ -1,0 +1,40 @@
+@import 'vars';
+
+html {
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $cBase;
+}
+.section {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+.tiltbtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 300px;
+  height: $hBtn;
+  background-color: $cBase;
+  box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
+  border-radius: $rBtn;
+  transform-style: preserve-3d;
+  &__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: $hBtn;
+    font-family: 'Saira', sans-serif;
+    color: $cDark;
+    font-size: 3.2rem;
+    text-decoration: none;
+  }
+}
