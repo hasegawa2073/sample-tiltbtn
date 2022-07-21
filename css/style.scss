@@ -26,7 +26,8 @@ body {
   box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
   border-radius: $rBtn;
   transform-style: preserve-3d;
-  transform: rotate3d(1, 1, 1, 30deg);
+  perspective: 400px;
+  transform: rotateX(-10deg) rotateY(-30deg) rotateZ(0deg);
   &__link {
     display: block;
     width: 100%;

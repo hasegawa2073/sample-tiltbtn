@@ -27,7 +27,8 @@ body {
   box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   border-radius: 50px;
   transform-style: preserve-3d;
-  transform: rotate3d(1, 1, 1, 30deg);
+  perspective: 400px;
+  transform: rotateX(-10deg) rotateY(-30deg) rotateZ(0deg);
 }
 .tiltbtn__link {
   display: block;
