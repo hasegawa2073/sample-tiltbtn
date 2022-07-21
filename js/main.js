@@ -5,5 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   btn.addEventListener('mousemove', function (e) {
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
+    let rateX = mouseX / btnW;
+    let rateY = mouseY / btnH;
   });
 });
