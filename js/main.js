@@ -57,9 +57,13 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.style.boxShadow = `${shadowDarkX}px ${shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${shadowLightXY}px -${shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
   });
 
-  // マウスが外れたら元に戻す
-  btn.addEventListener('mouseout', function () {
+  // ボタンをデフォルトのスタイルに戻す関数
+  const changeBtnDefaultStyle = function () {
     btn.style.boxShadow = btnDefaultBoxShadow;
     btn.style.transform = btnDefaultTransform;
+  };
+  // マウスが外れたら元に戻す
+  btn.addEventListener('mouseout', function () {
+    changeBtnDefaultStyle();
   });
 });
