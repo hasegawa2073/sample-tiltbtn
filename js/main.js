@@ -66,4 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
   btn.addEventListener('mouseout', function () {
     changeBtnDefaultStyle();
   });
+  // タッチが外れたら元に戻す
+  btn.addEventListener('touchend', function () {
+    changeBtnDefaultStyle();
+  });
 });
