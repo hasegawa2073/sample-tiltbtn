@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
         result[0] = -x * size; // darkのx座標のオフセット
         result[1] = -y * size; // darkのy座標のオフセット
-        result[2] = 20 - result[0]; // lightのx,y座標値のオフセット
+        result[2] = size - result[0]; // lightのx,y座標値のオフセット
         return result;
       }
       if ((x >= 0 && y <= 0) || (x >= 0 && y >= 0)) {
         result[0] = -x * size;
         result[1] = -y * size;
-        result[2] = 20 + result[0];
+        result[2] = size + result[0];
         return result;
       }
     };
