@@ -7,17 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const maxShadowSize = 20; //影のサイズ最大値
   const shadowBlurSize = 25; //影のぼかしサイズ
   const btnStyle = getComputedStyle(btn);
-  const btnDefaultBoxShadow = btnStyle.boxShadow;
-  const btnDefaultTransform = btnStyle.transform;
+  const btnDefaultBoxShadow = btnStyle.boxShadow; //box-shadowの初期状態
+  const btnDefaultTransform = btnStyle.transform; //transformの初期状態
   const lightColor = '#ffffff';
   const darkColor = '#cccccc';
 
   // マウスが乗ったら傾ける
   btn.addEventListener('mousemove', function (e) {
-    let mouseX = e.offsetX; // 0 <= mouseX <= width
-    let mouseY = e.offsetY; // 0 <= mouseY <= height
-    let rateX = (mouseX / btnW - 0.5) * 2; //  -1 <= rateX <= 1
-    let rateY = (mouseY / btnH - 0.5) * 2; //  -1 <= rateY <= 1
+    let mouseX = e.offsetX; //0 <= mouseX <= width
+    let mouseY = e.offsetY; //0 <= mouseY <= height
+    let rateX = (mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
+    let rateY = (mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
     const rotate = (x, y, deg) => {
       let result = [];
       if ((x <= 0 && y <= 0) || (x >= 0 && y >= 0)) {
@@ -51,13 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
       }
     };
-    btn.style.boxShadow = `${shadow(rateX, rateY, maxShadowSize)[0]}px ${
-      shadow(rateX, rateY, maxShadowSize)[1]
-    }px ${shadowBlurSize}px ${darkColor}, -${
-      shadow(rateX, rateY, maxShadowSize)[2]
-    }px -${
-      shadow(rateX, rateY, maxShadowSize)[2]
-    }px ${shadowBlurSize}px ${lightColor}`;
+    const shadowDarkX = shadow(rateX, rateY, maxShadowSize)[0];
+    const shadowDarkY = shadow(rateX, rateY, maxShadowSize)[1];
+    const shadowLightXY = shadow(rateX, rateY, maxShadowSize)[2];
+    btn.style.boxShadow = `${shadowDarkX}px ${shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${shadowLightXY}px -${shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
   });
 
   // マウスが外れたら元に戻す
