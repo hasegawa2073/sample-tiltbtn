@@ -25,4 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
       rotate(rateX, rateY, transformDeg)[0]
     }deg) rotateY(${rotate(rateX, rateY, transformDeg)[1]}deg)`;
   });
+  btn.addEventListener('mouseout', function () {
+    btn.style.transform = `scale3d(1.1, 1.1, 1.1) rotateX(0) rotateY(0)`;
+  });
 });
