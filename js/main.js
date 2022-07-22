@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnH = btn.clientHeight; //ボタンの高さ
   const transformDeg = 30;
   const maxShadowSize = 20;
+  const shadowBlurSize = 25;
   btn.addEventListener('mousemove', function (e) {
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
@@ -43,9 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     btn.style.boxShadow = `${shadow(rateX, rateY, maxShadowSize)[0]}px ${
       shadow(rateX, rateY, maxShadowSize)[1]
-    }px 20px #cccccc, -${shadow(rateX, rateY, maxShadowSize)[2]}px -${
+    }px ${shadowBlurSize}px #cccccc, -${
       shadow(rateX, rateY, maxShadowSize)[2]
-    }px 20px #ffffff`;
+    }px -${
+      shadow(rateX, rateY, maxShadowSize)[2]
+    }px ${shadowBlurSize}px #ffffff`;
   });
   btn.addEventListener('mouseout', function () {
     btn.style.transform = `scale3d(1.0, 1.0, 1.0) rotateX(0) rotateY(0)`;
