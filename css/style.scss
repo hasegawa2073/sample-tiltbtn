@@ -22,6 +22,7 @@ body {
   margin: auto;
   width: 300px;
   height: $hBtn;
+  background-color: $cBase;
   border-radius: $rBtn;
   box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
   transform-style: preserve-3d;
