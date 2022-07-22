@@ -27,10 +27,8 @@ body {
   box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   transform-style: preserve-3d;
   perspective: 400px;
-  transition: transform 0.3s ease;
-}
-.tiltbtn:hover {
   transform: scale3d(1.1, 1.1, 1.1) rotateX(20deg) rotateY(20deg);
+  transition: transform 0.3s ease;
 }
 .tiltbtn:hover .tiltbtn__link {
   transform: translateZ(40px);
