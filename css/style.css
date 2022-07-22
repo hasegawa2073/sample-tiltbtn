@@ -27,7 +27,7 @@ body {
   box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   transform-style: preserve-3d;
   perspective: 400px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .tiltbtn:hover .tiltbtn__link {
   transform: translateZ(40px);
