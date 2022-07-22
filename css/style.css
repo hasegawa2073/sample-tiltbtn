@@ -29,7 +29,7 @@ body {
   transform-style: preserve-3d;
   perspective: 400px;
   transform: scale3d(1, 1, 1) rotateX(0) rotateY(0);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
 .tiltbtn:hover {
   background-color: #fafafa;
@@ -47,5 +47,5 @@ body {
   color: #cccccc;
   font-size: 3.8rem;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }/*# sourceMappingURL=style.css.map */
