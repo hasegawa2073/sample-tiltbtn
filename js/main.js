@@ -2,12 +2,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const btn = document.querySelector('.tiltbtn'); //ボタン自体を取得
   const btnW = btn.clientWidth; //ボタンの横幅
   const btnH = btn.clientHeight; //ボタンの高さ
-  const transformDeg = 30;
-  const maxShadowSize = 20;
-  const shadowBlurSize = 25;
+  const transformDeg = 30; //歪みの角度
+  const transformScale = 1.08;
+  const maxShadowSize = 20; //影のサイズ最大値
+  const shadowBlurSize = 25; //影のぼかしサイズ
+  const btnStyle = getComputedStyle(btn);
+  const btnDefaultBoxShadow = btnStyle.boxShadow;
+  const btnDefaultTransform = btnStyle.transform;
   btn.addEventListener('mousemove', function (e) {
-    let mouseX = e.offsetX;
-    let mouseY = e.offsetY;
+    let mouseX = e.offsetX; // 0 <= mouseX <= width
+    let mouseY = e.offsetY; // 0 <= mouseY <= height
     let rateX = (mouseX / btnW - 0.5) * 2; //  -1 <= rateX <= 1
     let rateY = (mouseY / btnH - 0.5) * 2; //  -1 <= rateY <= 1
     const rotate = (x, y, deg) => {
@@ -23,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
       }
     };
-    btn.style.transform = `scale3d(1.08, 1.08, 1.08) rotateX(${
+    btn.style.transform = `scale3d(${transformScale}, ${transformScale}, ${transformScale}) rotateX(${
       rotate(rateX, rateY, transformDeg)[0]
     }deg) rotateY(${rotate(rateX, rateY, transformDeg)[1]}deg)`;
 
@@ -50,8 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
       shadow(rateX, rateY, maxShadowSize)[2]
     }px ${shadowBlurSize}px #ffffff`;
   });
+
+  // マウスが外れたら元に戻す
   btn.addEventListener('mouseout', function () {
-    btn.style.transform = `scale3d(1.0, 1.0, 1.0) rotateX(0) rotateY(0)`;
-    btn.style.boxShadow = `10px 10px 10px #cccccc, -10px -10px 10px #ffffff`;
+    btn.style.boxShadow = btnDefaultBoxShadow;
+    btn.style.transform = btnDefaultTransform;
   });
 });
