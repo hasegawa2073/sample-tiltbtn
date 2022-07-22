@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnStyle = getComputedStyle(btn);
   const btnDefaultBoxShadow = btnStyle.boxShadow;
   const btnDefaultTransform = btnStyle.transform;
+  const lightColor = '#ffffff';
+  const darkColor = '#cccccc';
   btn.addEventListener('mousemove', function (e) {
     let mouseX = e.offsetX; // 0 <= mouseX <= width
     let mouseY = e.offsetY; // 0 <= mouseY <= height
@@ -48,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     btn.style.boxShadow = `${shadow(rateX, rateY, maxShadowSize)[0]}px ${
       shadow(rateX, rateY, maxShadowSize)[1]
-    }px ${shadowBlurSize}px #cccccc, -${
+    }px ${shadowBlurSize}px ${darkColor}, -${
       shadow(rateX, rateY, maxShadowSize)[2]
     }px -${
       shadow(rateX, rateY, maxShadowSize)[2]
-    }px ${shadowBlurSize}px #ffffff`;
+    }px ${shadowBlurSize}px ${lightColor}`;
   });
 
   // マウスが外れたら元に戻す
