@@ -31,9 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
       }
     };
-    btn.style.transform = `scale3d(${transformScale}, ${transformScale}, ${transformScale}) rotateX(${
-      rotate(rateX, rateY, transformDeg)[0]
-    }deg) rotateY(${rotate(rateX, rateY, transformDeg)[1]}deg)`;
+    const scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
+    const rotateX = rotate(rateX, rateY, transformDeg)[0];
+    const rotateY = rotate(rateX, rateY, transformDeg)[1];
+    btn.style.transform = `scale3d(${scale3d}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
     const shadow = (x, y, size) => {
       let result = [maxShadowSize, maxShadowSize]; // 初期値
