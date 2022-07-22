@@ -53,8 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
       }
     };
-    // console.log(shadow(rateX, rateY, maxShadowSize)[0]);
-    shadow();
     btn.style.boxShadow = `${shadow(rateX, rateY, maxShadowSize)[0]}px ${
       shadow(rateX, rateY, maxShadowSize)[1]
     }px 20px #cccccc, -${shadow(rateX, rateY, maxShadowSize)[2]}px -${
