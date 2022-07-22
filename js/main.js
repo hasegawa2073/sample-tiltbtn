@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.style.boxShadow = `${shadowDarkX}px ${shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${shadowLightXY}px -${shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
   });
 
+  // タッチしたとき
+  btn.addEventListener('touchstart', function (e) {});
+
+  // 指が動いているとき
+  btn.addEventListener('touchmove', function (e) {});
+
   // ボタンをデフォルトのスタイルに戻す関数
   const changeBtnDefaultStyle = function () {
     btn.style.boxShadow = btnDefaultBoxShadow;
