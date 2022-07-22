@@ -27,8 +27,10 @@ body {
   box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
   transform-style: preserve-3d;
   perspective: 400px;
-  transition: transform $tTransition ease, box-shadow $tTransition ease;
+  transition: transform $tTransition ease, background-color $tTransition ease,
+    box-shadow $tTransition ease;
   &:hover {
+    background-color: $cHover;
     .tiltbtn__link {
       transform: translateZ(40px);
     }
