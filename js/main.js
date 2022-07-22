@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const shadow = (x, y, size) => {
       let result = [maxShadowSize, maxShadowSize]; // 初期値
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
-        result[0] = -x * size; // darkのx座標のオフセット
-        result[1] = -y * size; // darkのy座標のオフセット
-        result[2] = size - result[0]; // lightのx,y座標値のオフセット
+        result[0] = -x * size; //darkのx座標のオフセット
+        result[1] = -y * size; //darkのy座標のオフセット
+        result[2] = size - result[0]; // lightのx,y座標のオフセット
         return result;
       }
       if ((x >= 0 && y <= 0) || (x >= 0 && y >= 0)) {
