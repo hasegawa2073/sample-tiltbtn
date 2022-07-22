@@ -27,7 +27,7 @@ body {
   box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   transform-style: preserve-3d;
   perspective: 400px;
-  transition: transform 0.1s ease;
+  transition: transform 0.2s ease;
 }
 .tiltbtn:hover .tiltbtn__link {
   transform: translateZ(40px);
@@ -42,5 +42,5 @@ body {
   color: #cccccc;
   font-size: 3.2rem;
   text-decoration: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }/*# sourceMappingURL=style.css.map */
