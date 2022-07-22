@@ -33,6 +33,7 @@ body {
   &:hover {
     background-color: $cHover;
     .tiltbtn__link {
+      color: $cHoverText;
       transform: translateZ(40px);
     }
   }
@@ -46,6 +47,6 @@ body {
     color: $cDark;
     font-size: 3.8rem;
     text-decoration: none;
-    transition: transform $tTransition ease;
+    transition: transform $tTransition ease, color $tTransition ease;
   }
 }
