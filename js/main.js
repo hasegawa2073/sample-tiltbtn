@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnDefaultTransform = btnStyle.transform;
   const lightColor = '#ffffff';
   const darkColor = '#cccccc';
+
+  // マウスが乗ったら傾ける
   btn.addEventListener('mousemove', function (e) {
     let mouseX = e.offsetX; // 0 <= mouseX <= width
     let mouseY = e.offsetY; // 0 <= mouseY <= height
