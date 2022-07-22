@@ -27,7 +27,7 @@ body {
   transform-style: preserve-3d;
   perspective: 400px;
   transform: scale3d(1.1, 1.1, 1.1) rotateX(20deg) rotateY(20deg);
-  transition: transform 0.3s ease;
+  transition: transform 0.1s ease;
   &:hover {
     .tiltbtn__link {
       transform: translateZ(40px);
