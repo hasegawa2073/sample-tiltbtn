@@ -22,12 +22,17 @@ body {
   margin: auto;
   width: 300px;
   height: $hBtn;
-  background-color: $cBase;
-  box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
   border-radius: $rBtn;
+  box-shadow: 10px 10px 10px $cDark, -10px -10px 10px $cLight;
   transform-style: preserve-3d;
   perspective: 400px;
-  transform: rotateX(-10deg) rotateY(-30deg) rotateZ(0deg);
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale3d(1.1, 1.1, 1.1) rotateX(20deg) rotateY(20deg);
+    .tiltbtn__link {
+      transform: translateZ(40px);
+    }
+  }
   &__link {
     display: block;
     width: 100%;
@@ -38,5 +43,6 @@ body {
     color: $cDark;
     font-size: 3.2rem;
     text-decoration: none;
+    transition: transform 0.3s ease;
   }
 }

@@ -23,12 +23,17 @@ body {
   margin: auto;
   width: 300px;
   height: 300px;
-  background-color: #f7f7f7;
-  box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   border-radius: 50px;
+  box-shadow: 10px 10px 10px #cccccc, -10px -10px 10px #ffffff;
   transform-style: preserve-3d;
   perspective: 400px;
-  transform: rotateX(-10deg) rotateY(-30deg) rotateZ(0deg);
+  transition: transform 0.3s ease;
+}
+.tiltbtn:hover {
+  transform: scale3d(1.1, 1.1, 1.1) rotateX(20deg) rotateY(20deg);
+}
+.tiltbtn:hover .tiltbtn__link {
+  transform: translateZ(40px);
 }
 .tiltbtn__link {
   display: block;
@@ -40,4 +45,5 @@ body {
   color: #cccccc;
   font-size: 3.2rem;
   text-decoration: none;
+  transition: transform 0.3s ease;
 }/*# sourceMappingURL=style.css.map */
