@@ -40,11 +40,6 @@ body {
     transform: translateZ(40px);
   }
 }
-@media screen and (max-width: 600px) {
-  .tiltbtn {
-    background-color: #efefef;
-  }
-}
 .tiltbtn__link {
   display: block;
   width: 100%;
