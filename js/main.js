@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnLinkDefaultTransform = btnLinkStyle.transform; //transformの初期状態
   const btnMarginTop = parseInt(btnStyle.marginTop); //btnのmargin-top
   const btnMarginLeft = parseInt(btnStyle.marginLeft); //btnのmargin-left
-  const sp = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i);
+  const sp = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i); //スマホ・タブレットの判定
 
   // スマホ・タブレット or PC でボタンの文字列を変更
   if (sp) {
@@ -121,7 +121,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const tiltbtn = new Tilt(e);
   tiltbtn.noScroll();
 
-  // マウスが乗ったら傾ける
+  // マウスが入ってきたら傾ける
+  btn.addEventListener('mouseover', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.rotate();
+    tiltbtn.shadow();
+  });
+
+  // マウスが動いているとき傾ける
   btn.addEventListener('mousemove', function (e) {
     const tiltbtn = new Tilt(e);
     tiltbtn.rotate();
