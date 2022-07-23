@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnStyle = getComputedStyle(btn);
   const btnDefaultBoxShadow = btnStyle.boxShadow; //box-shadowの初期状態
   const btnDefaultTransform = btnStyle.transform; //transformの初期状態
+  const btnMarginTop = parseInt(btnStyle.marginTop); //btnのmargin-top
+  const btnMarginLeft = parseInt(btnStyle.marginLeft); //btnのmargin-left
 
   // スマホ・タブレット or PC でボタンの文字列を変更
   if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
@@ -27,8 +29,18 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.h = window.innerHeight; //画面の高さ(アドレスバーを除く)
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
-      this.rateX = (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
-      this.rateY = (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
+      this.touchX = e.changedTouches
+        ? e.changedTouches[0].pageX - btnMarginLeft
+        : '';
+      this.touchY = e.changedTouches
+        ? e.changedTouches[0].pageY - btnMarginTop
+        : '';
+      this.rateX = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)
+        ? (this.touchX / btnW - 0.5) * 2
+        : (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
+      this.rateY = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)
+        ? (this.touchY / btnH - 0.5) * 2
+        : (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
       this.scale3d = `${this.transformScale}, ${this.transformScale}, ${this.transformScale}`;
     }
     noScroll() {
@@ -106,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // タッチしたとき
   btn.addEventListener('touchstart', function (e) {
+    e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.rotate();
     tiltbtn.shadow();
@@ -113,13 +126,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // 指が動いているとき
   btn.addEventListener('touchmove', function (e) {
+    e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.rotate();
     tiltbtn.shadow();
   });
 
+  // タッチがキャンセルされたら元に戻す
+  btn.addEventListener('touchcancel', function (e) {
+    e.preventDefault();
+    const tiltbtn = new Tilt(e);
+    tiltbtn.changeBtnDefaultStyle();
+  });
+
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
+    e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
   });
