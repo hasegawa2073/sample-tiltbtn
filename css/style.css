@@ -31,12 +31,14 @@ body {
   transform: scale3d(1, 1, 1) rotateX(0) rotateY(0);
   transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
-.tiltbtn:hover {
-  background-color: #fafafa;
-}
-.tiltbtn:hover .tiltbtn__link {
-  color: #d7d7d7;
-  transform: translateZ(40px);
+@media (hover: hover) {
+  .tiltbtn:hover {
+    background-color: #fafafa;
+  }
+  .tiltbtn:hover .tiltbtn__link {
+    color: #d7d7d7;
+    transform: translateZ(40px);
+  }
 }
 .tiltbtn__link {
   display: block;

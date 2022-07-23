@@ -30,11 +30,13 @@ body {
   transform: scale3d(1, 1, 1) rotateX(0) rotateY(0);
   transition: transform $tTransition ease, background-color $tTransition ease,
     box-shadow $tTransition ease;
-  &:hover {
-    background-color: $cHover;
-    .tiltbtn__link {
-      color: $cHoverText;
-      transform: translateZ(40px);
+  @media (hover: hover) {
+    &:hover {
+      background-color: $cHover;
+      .tiltbtn__link {
+        color: $cHoverText;
+        transform: translateZ(40px);
+      }
     }
   }
   &__link {
