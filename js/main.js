@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnLinkDefaultTransform = btnLinkStyle.transform; //transformの初期状態
   const btnMarginTop = parseInt(btnStyle.marginTop); //btnのmargin-top
   const btnMarginLeft = parseInt(btnStyle.marginLeft); //btnのmargin-left
+  const sp = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i);
 
   // スマホ・タブレット or PC でボタンの文字列を変更
-  if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
+  if (sp) {
     btnLink.textContent = btnTextSp;
   } else {
     btnLink.textContent = btnTextPc;
@@ -42,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.touchY = e.changedTouches
         ? e.changedTouches[0].pageY - btnMarginTop
         : '';
-      this.rateX = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)
+      this.rateX = sp
         ? (this.touchX / btnW - 0.5) * 2
         : (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
-      this.rateY = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)
+      this.rateY = sp
         ? (this.touchY / btnH - 0.5) * 2
         : (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
       this.scale3d = `${this.transformScale}, ${this.transformScale}, ${this.transformScale}`;
