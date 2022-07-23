@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnW = btn.clientWidth; //ボタンの横幅
   const btnH = btn.clientHeight; //ボタンの高さ
   const btnStyle = getComputedStyle(btn);
+  const btnDefaultBgColor = btnStyle.backgroundColor; //background-colorの初期状態
   const btnDefaultBoxShadow = btnStyle.boxShadow; //box-shadowの初期状態
   const btnDefaultTransform = btnStyle.transform; //transformの初期状態
+  const btnLinkStyle = getComputedStyle(btnLink);
+  const btnLinkDefaultColor = btnLinkStyle.color; //colorの初期状態
+  const btnLinkDefaultTransform = btnLinkStyle.transform; //transformの初期状態
   const btnMarginTop = parseInt(btnStyle.marginTop); //btnのmargin-top
   const btnMarginLeft = parseInt(btnStyle.marginLeft); //btnのmargin-left
 
@@ -26,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.shadowBlurSize = 25; //影のぼかしサイズ
       this.lightColor = '#ffffff'; //明かり
       this.darkColor = '#cccccc'; //影
+      this.touchBgColor = '#fafafa'; //タッチしたときの背景色
+      this.touchTextColor = '#d7d7d7'; //タッチしたときの文字色
+      this.translateZ = 40; //文字を浮かび上がらせる度合い
       this.h = window.innerHeight; //画面の高さ(アドレスバーを除く)
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
@@ -49,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
     changeBtnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
       btn.style.transform = btnDefaultTransform;
+      btn.style.backgroundColor = btnDefaultBgColor;
+      btnLink.style.color = btnLinkDefaultColor;
+      btnLink.style.transform = btnLinkDefaultTransform;
     }
     rotate(x, y, deg) {
       let result = [];
@@ -65,6 +75,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.rotateX = this.rotate(this.rateX, this.rateY, this.transformDeg)[0];
       this.rotateY = this.rotate(this.rateX, this.rateY, this.transformDeg)[1];
       btn.style.transform = `scale3d(${this.scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
+    }
+    touchStyle() {
+      btn.style.backgroundColor = this.touchBgColor;
+      btnLink.style.color = this.touchTextColor;
+      btnLink.style.transform = `translateZ(${this.translateZ}px)`;
     }
     shadow(x, y, size) {
       let result = [this.maxShadowSize, this.maxShadowSize]; // 初期値
@@ -122,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     const tiltbtn = new Tilt(e);
     tiltbtn.rotate();
     tiltbtn.shadow();
+    tiltbtn.touchStyle();
   });
 
   // 指が動いているとき
@@ -130,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     const tiltbtn = new Tilt(e);
     tiltbtn.rotate();
     tiltbtn.shadow();
+    tiltbtn.touchStyle();
   });
 
   // タッチがキャンセルされたら元に戻す
