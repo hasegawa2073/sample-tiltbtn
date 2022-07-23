@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function (e) {
+  const section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
   const btn = document.querySelector('.tiltbtn'); //ボタン自体を取得
   const btnW = btn.clientWidth; //ボタンの横幅
   const btnH = btn.clientHeight; //ボタンの高さ
@@ -11,14 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnDefaultTransform = btnStyle.transform; //transformの初期状態
   const lightColor = '#ffffff';
   const darkColor = '#cccccc';
-
   class Tilt {
     constructor(e) {
+      this.h = window.innerHeight;
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
       this.rateX = (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
       this.rateY = (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
       this.scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
+    }
+    noScroll() {
+      section.style.height = `${this.h}px`;
     }
     changeBtnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
@@ -65,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // スクロールしないようにする
+  const tiltbtn = new Tilt(e);
+  tiltbtn.noScroll();
+
   // マウスが乗ったら傾ける
   btn.addEventListener('mousemove', function (e) {
     const tiltbtn = new Tilt(e);
@@ -79,14 +87,28 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // タッチしたとき
-  btn.addEventListener('touchstart', function (e) {});
+  btn.addEventListener('touchstart', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.rotate();
+    tiltbtn.shadow();
+  });
 
   // 指が動いているとき
-  btn.addEventListener('touchmove', function (e) {});
+  btn.addEventListener('touchmove', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.rotate();
+    tiltbtn.shadow();
+  });
 
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
+  });
+
+  // 画面のリサイズ時
+  window.addEventListener('resize', function () {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.noScroll();
   });
 });
