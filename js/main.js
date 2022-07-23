@@ -1,10 +1,20 @@
 document.addEventListener('DOMContentLoaded', function (e) {
   const btn = document.querySelector('.tiltbtn'); //ボタン自体を取得
+  const btnLink = btn.querySelector('.tiltbtn__link'); //子要素
+  const btnTextSp = 'Touch Me!'; //スマホ・タブレットのとき
+  const btnTextPc = 'Hover Me!'; //PCのとき
   const btnW = btn.clientWidth; //ボタンの横幅
   const btnH = btn.clientHeight; //ボタンの高さ
   const btnStyle = getComputedStyle(btn);
   const btnDefaultBoxShadow = btnStyle.boxShadow; //box-shadowの初期状態
   const btnDefaultTransform = btnStyle.transform; //transformの初期状態
+
+  // スマホ・タブレット or PC でボタンの文字列を変更
+  if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
+    btnLink.textContent = btnTextSp;
+  } else {
+    btnLink.textContent = btnTextPc;
+  }
   class Tilt {
     constructor(e) {
       this.section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
@@ -14,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.shadowBlurSize = 25; //影のぼかしサイズ
       this.lightColor = '#ffffff'; //明かり
       this.darkColor = '#cccccc'; //影
-      this.h = window.innerHeight;
+      this.h = window.innerHeight; //画面の高さ(アドレスバーを除く)
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
       this.rateX = (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
