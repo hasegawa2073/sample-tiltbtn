@@ -12,13 +12,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const lightColor = '#ffffff';
   const darkColor = '#cccccc';
 
-  // マウスが乗ったら傾ける
-  btn.addEventListener('mousemove', function (e) {
-    let mouseX = e.offsetX; //0 <= mouseX <= width
-    let mouseY = e.offsetY; //0 <= mouseY <= height
-    let rateX = (mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
-    let rateY = (mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
-    const rotate = (x, y, deg) => {
+  class Tilt {
+    constructor(e) {
+      this.mouseX = e.offsetX; //0 <= mouseX <= width
+      this.mouseY = e.offsetY; //0 <= mouseY <= height
+      this.rateX = (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
+      this.rateY = (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
+      this.scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
+    }
+    changeBtnDefaultStyle() {
+      btn.style.boxShadow = btnDefaultBoxShadow;
+      btn.style.transform = btnDefaultTransform;
+    }
+    rotate(x, y, deg) {
       let result = [];
       if ((x <= 0 && y <= 0) || (x >= 0 && y >= 0)) {
         result[0] = x * deg;
@@ -30,13 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
         result[1] = y * deg;
         return result;
       }
-    };
-    const scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
-    const rotateX = rotate(rateX, rateY, transformDeg)[0];
-    const rotateY = rotate(rateX, rateY, transformDeg)[1];
-    btn.style.transform = `scale3d(${scale3d}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-    const shadow = (x, y, size) => {
+      this.rotateX = this.rotate(this.rateX, this.rateY, transformDeg)[0];
+      this.rotateY = this.rotate(this.rateX, this.rateY, transformDeg)[1];
+      btn.style.transform = `scale3d(${this.scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
+    }
+    shadow(x, y, size) {
       let result = [maxShadowSize, maxShadowSize]; // 初期値
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
         result[0] = -x * size; //darkのx座標のオフセット
@@ -50,11 +54,62 @@ document.addEventListener('DOMContentLoaded', function () {
         result[2] = size + result[0];
         return result;
       }
-    };
-    const shadowDarkX = shadow(rateX, rateY, maxShadowSize)[0];
-    const shadowDarkY = shadow(rateX, rateY, maxShadowSize)[1];
-    const shadowLightXY = shadow(rateX, rateY, maxShadowSize)[2];
-    btn.style.boxShadow = `${shadowDarkX}px ${shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${shadowLightXY}px -${shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
+      this.shadowDarkX = this.shadow(this.rateX, this.rateY, maxShadowSize)[0];
+      this.shadowDarkY = this.shadow(this.rateX, this.rateY, maxShadowSize)[1];
+      this.shadowLightXY = this.shadow(
+        this.rateX,
+        this.rateY,
+        maxShadowSize
+      )[2];
+      btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
+    }
+  }
+
+  // マウスが乗ったら傾ける
+  btn.addEventListener('mousemove', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.rotate();
+    tiltbtn.shadow();
+    // let mouseX = e.offsetX; //0 <= mouseX <= width
+    // let mouseY = e.offsetY; //0 <= mouseY <= height
+    // let rateX = (mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
+    // let rateY = (mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
+    // const rotate = (x, y, deg) => {
+    //   let result = [];
+    //   if ((x <= 0 && y <= 0) || (x >= 0 && y >= 0)) {
+    //     result[0] = x * deg;
+    //     result[1] = -y * deg;
+    //     return result;
+    //   }
+    //   if ((x >= 0 && y <= 0) || (x <= 0 && y >= 0)) {
+    //     result[0] = -x * deg;
+    //     result[1] = y * deg;
+    //     return result;
+    //   }
+    // };
+    // const scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
+    // const rotateX = rotate(rateX, rateY, transformDeg)[0];
+    // const rotateY = rotate(rateX, rateY, transformDeg)[1];
+    // btn.style.transform = `scale3d(${scale3d}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    // const shadow = (x, y, size) => {
+    //   let result = [maxShadowSize, maxShadowSize]; // 初期値
+    //   if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
+    //     result[0] = -x * size; //darkのx座標のオフセット
+    //     result[1] = -y * size; //darkのy座標のオフセット
+    //     result[2] = size - result[0]; // lightのx,y座標のオフセット
+    //     return result;
+    //   }
+    //   if ((x >= 0 && y <= 0) || (x >= 0 && y >= 0)) {
+    //     result[0] = -x * size;
+    //     result[1] = -y * size;
+    //     result[2] = size + result[0];
+    //     return result;
+    //   }
+    // };
+    // const shadowDarkX = shadow(rateX, rateY, maxShadowSize)[0];
+    // const shadowDarkY = shadow(rateX, rateY, maxShadowSize)[1];
+    // const shadowLightXY = shadow(rateX, rateY, maxShadowSize)[2];
+    // btn.style.boxShadow = `${shadowDarkX}px ${shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${shadowLightXY}px -${shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
   });
 
   // タッチしたとき
@@ -69,11 +124,13 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.style.transform = btnDefaultTransform;
   };
   // マウスが外れたら元に戻す
-  btn.addEventListener('mouseout', function () {
-    changeBtnDefaultStyle();
+  btn.addEventListener('mouseout', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.changeBtnDefaultStyle();
   });
   // タッチが外れたら元に戻す
-  btn.addEventListener('touchend', function () {
-    changeBtnDefaultStyle();
+  btn.addEventListener('touchend', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.changeBtnDefaultStyle();
   });
 });
