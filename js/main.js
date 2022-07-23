@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function (e) {
+  const section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
+  const layer = document.querySelector('.layer');
   const btn = document.querySelector('.tiltbtn'); //ボタン自体を取得
   const btnLink = btn.querySelector('.tiltbtn__link'); //子要素
   const btnTextSp = 'Touch Me!'; //スマホ・タブレットのとき
@@ -24,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   }
   class Tilt {
     constructor(e) {
-      this.section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
       this.transformDeg = 30; //歪みの角度
       this.transformScale = 1.08;
       this.maxShadowSize = 20; //影のサイズ最大値
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.scale3d = `${this.transformScale}, ${this.transformScale}, ${this.transformScale}`;
     }
     noScroll() {
-      this.section.style.height = `${this.h}px`;
+      section.style.height = `${this.h}px`;
     }
     changeBtnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
@@ -141,6 +142,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
     tiltbtn.changeBtnDefaultStyle();
   });
 
+  // マウスが余白に入ったら元に戻す
+  layer.addEventListener('mouseover', function (e) {
+    const tiltbtn = new Tilt(e);
+    tiltbtn.changeBtnDefaultStyle();
+  });
+
   // タッチしたとき
   btn.addEventListener('touchstart', function (e) {
     e.preventDefault();
@@ -169,6 +176,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
+    e.preventDefault();
+    const tiltbtn = new Tilt(e);
+    tiltbtn.changeBtnDefaultStyle();
+    tiltbtn.changeBtnDefaultStyleSp();
+  });
+
+  // 余白にタッチしたら元に戻す
+  layer.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
