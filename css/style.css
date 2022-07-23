@@ -51,4 +51,15 @@ body {
   font-size: 3.8rem;
   text-decoration: none;
   transition: transform 0.15s ease, color 0.15s ease;
+}
+
+@media screen and (max-width: 400px) {
+  .tiltbtn {
+    width: 75vw;
+    height: 75vw;
+  }
+  .tiltbtn__link {
+    font-size: 10vw;
+    line-height: 75vw;
+  }
 }/*# sourceMappingURL=style.css.map */
