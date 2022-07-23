@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
     noScroll() {
       section.style.height = `${this.h}px`;
     }
-    changeBtnDefaultStyle() {
+    btnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
       btn.style.transform = btnDefaultTransform;
     }
-    changeBtnDefaultStyleSp() {
+    btnDefaultStyleSp() {
       btn.style.backgroundColor = btnDefaultBgColor;
       btnLink.style.color = btnLinkDefaultColor;
       btnLink.style.transform = btnLinkDefaultTransform;
@@ -141,16 +141,16 @@ document.addEventListener('DOMContentLoaded', function (e) {
   // マウスが外れたら元に戻す
   btn.addEventListener('mouseout', function (e) {
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeBtnDefaultStyle();
+    tiltbtn.btnDefaultStyle();
   });
 
   // マウスが余白に入ったら元に戻す
   layer.addEventListener('mouseover', function (e) {
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeBtnDefaultStyle();
+    tiltbtn.btnDefaultStyle();
   });
 
-  // タッチしたとき
+  // タッチしたとき傾ける
   btn.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     tiltbtn.touchStyle();
   });
 
-  // 指が動いているとき
+  // 指が動いているとき傾ける
   btn.addEventListener('touchmove', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
@@ -170,24 +170,24 @@ document.addEventListener('DOMContentLoaded', function (e) {
   btn.addEventListener('touchcancel', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeBtnDefaultStyle();
-    tiltbtn.changeBtnDefaultStyleSp();
+    tiltbtn.btnDefaultStyle();
+    tiltbtn.btnDefaultStyleSp();
   });
 
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeBtnDefaultStyle();
-    tiltbtn.changeBtnDefaultStyleSp();
+    tiltbtn.btnDefaultStyle();
+    tiltbtn.btnDefaultStyleSp();
   });
 
   // 余白にタッチしたら元に戻す
   layer.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeBtnDefaultStyle();
-    tiltbtn.changeBtnDefaultStyleSp();
+    tiltbtn.btnDefaultStyle();
+    tiltbtn.btnDefaultStyleSp();
   });
 
   // 画面のリサイズ時
