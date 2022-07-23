@@ -1,28 +1,28 @@
 document.addEventListener('DOMContentLoaded', function (e) {
-  const section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
   const btn = document.querySelector('.tiltbtn'); //ボタン自体を取得
   const btnW = btn.clientWidth; //ボタンの横幅
   const btnH = btn.clientHeight; //ボタンの高さ
-  const transformDeg = 30; //歪みの角度
-  const transformScale = 1.08;
-  const maxShadowSize = 20; //影のサイズ最大値
-  const shadowBlurSize = 25; //影のぼかしサイズ
   const btnStyle = getComputedStyle(btn);
   const btnDefaultBoxShadow = btnStyle.boxShadow; //box-shadowの初期状態
   const btnDefaultTransform = btnStyle.transform; //transformの初期状態
-  const lightColor = '#ffffff';
-  const darkColor = '#cccccc';
   class Tilt {
     constructor(e) {
+      this.section = document.querySelector('.section'); //高さを画面いっぱいに持つsection
+      this.transformDeg = 30; //歪みの角度
+      this.transformScale = 1.08;
+      this.maxShadowSize = 20; //影のサイズ最大値
+      this.shadowBlurSize = 25; //影のぼかしサイズ
+      this.lightColor = '#ffffff'; //明かり
+      this.darkColor = '#cccccc'; //影
       this.h = window.innerHeight;
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
       this.rateX = (this.mouseX / btnW - 0.5) * 2; //-1 <= rateX <= 1
       this.rateY = (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
-      this.scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
+      this.scale3d = `${this.transformScale}, ${this.transformScale}, ${this.transformScale}`;
     }
     noScroll() {
-      section.style.height = `${this.h}px`;
+      this.section.style.height = `${this.h}px`;
     }
     changeBtnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
         result[1] = y * deg;
         return result;
       }
-      this.rotateX = this.rotate(this.rateX, this.rateY, transformDeg)[0];
-      this.rotateY = this.rotate(this.rateX, this.rateY, transformDeg)[1];
+      this.rotateX = this.rotate(this.rateX, this.rateY, this.transformDeg)[0];
+      this.rotateY = this.rotate(this.rateX, this.rateY, this.transformDeg)[1];
       btn.style.transform = `scale3d(${this.scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
     }
     shadow(x, y, size) {
-      let result = [maxShadowSize, maxShadowSize]; // 初期値
+      let result = [this.maxShadowSize, this.maxShadowSize]; // 初期値
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
         result[0] = -x * size; //darkのx座標のオフセット
         result[1] = -y * size; //darkのy座標のオフセット
@@ -58,14 +58,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
         result[2] = size + result[0];
         return result;
       }
-      this.shadowDarkX = this.shadow(this.rateX, this.rateY, maxShadowSize)[0];
-      this.shadowDarkY = this.shadow(this.rateX, this.rateY, maxShadowSize)[1];
+      this.shadowDarkX = this.shadow(
+        this.rateX,
+        this.rateY,
+        this.maxShadowSize
+      )[0];
+      this.shadowDarkY = this.shadow(
+        this.rateX,
+        this.rateY,
+        this.maxShadowSize
+      )[1];
       this.shadowLightXY = this.shadow(
         this.rateX,
         this.rateY,
-        maxShadowSize
+        this.maxShadowSize
       )[2];
-      btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
+      btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${this.shadowBlurSize}px ${this.darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${this.shadowBlurSize}px ${this.lightColor}`;
     }
   }
 
