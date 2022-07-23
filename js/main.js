@@ -80,11 +80,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.rotateY = this.rotate(this.rateX, this.rateY, this.transformDeg)[1];
       btn.style.transform = `scale3d(${this.scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
     }
-    touchStyle() {
-      btn.style.backgroundColor = this.touchBgColor;
-      btnLink.style.color = this.touchTextColor;
-      btnLink.style.transform = `translateZ(${this.translateZ}px)`;
-    }
     shadow(x, y, size) {
       let result = [this.maxShadowSize, this.maxShadowSize]; // 初期値
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
@@ -116,6 +111,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
       )[2];
       btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${this.shadowBlurSize}px ${this.darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${this.shadowBlurSize}px ${this.lightColor}`;
     }
+    changeStyle() {
+      this.rotate();
+      this.shadow();
+    }
+    touchStyle() {
+      btn.style.backgroundColor = this.touchBgColor;
+      btnLink.style.color = this.touchTextColor;
+      btnLink.style.transform = `translateZ(${this.translateZ}px)`;
+    }
   }
 
   // スクロールしないようにする
@@ -125,15 +129,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
   // マウスが入ってきたら傾ける
   btn.addEventListener('mouseover', function (e) {
     const tiltbtn = new Tilt(e);
-    tiltbtn.rotate();
-    tiltbtn.shadow();
+    tiltbtn.changeStyle();
   });
 
   // マウスが動いているとき傾ける
   btn.addEventListener('mousemove', function (e) {
     const tiltbtn = new Tilt(e);
-    tiltbtn.rotate();
-    tiltbtn.shadow();
+    tiltbtn.changeStyle();
   });
 
   // マウスが外れたら元に戻す
@@ -152,8 +154,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   btn.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.rotate();
-    tiltbtn.shadow();
+    tiltbtn.changeStyle();
     tiltbtn.touchStyle();
   });
 
@@ -161,8 +162,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   btn.addEventListener('touchmove', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.rotate();
-    tiltbtn.shadow();
+    tiltbtn.changeStyle();
     tiltbtn.touchStyle();
   });
 
