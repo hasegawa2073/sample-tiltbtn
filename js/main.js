@@ -72,17 +72,17 @@ document.addEventListener('DOMContentLoaded', function () {
     tiltbtn.shadow();
   });
 
-  // タッチしたとき
-  btn.addEventListener('touchstart', function (e) {});
-
-  // 指が動いているとき
-  btn.addEventListener('touchmove', function (e) {});
-
   // マウスが外れたら元に戻す
   btn.addEventListener('mouseout', function (e) {
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
   });
+
+  // タッチしたとき
+  btn.addEventListener('touchstart', function (e) {});
+
+  // 指が動いているとき
+  btn.addEventListener('touchmove', function (e) {});
 
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
