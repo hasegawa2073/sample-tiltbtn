@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
     changeBtnDefaultStyle() {
       btn.style.boxShadow = btnDefaultBoxShadow;
       btn.style.transform = btnDefaultTransform;
+    }
+    changeBtnDefaultStyleSp() {
       btn.style.backgroundColor = btnDefaultBgColor;
       btnLink.style.color = btnLinkDefaultColor;
       btnLink.style.transform = btnLinkDefaultTransform;
@@ -154,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
+    tiltbtn.changeBtnDefaultStyleSp();
   });
 
   // タッチが外れたら元に戻す
@@ -161,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
     tiltbtn.changeBtnDefaultStyle();
+    tiltbtn.changeBtnDefaultStyleSp();
   });
 
   // 画面のリサイズ時
