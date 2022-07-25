@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnLinkDefaultTransform = btnLinkStyle.transform; //transformの初期状態
   const btnMarginTop = parseInt(btnStyle.marginTop); //btnのmargin-top
   const btnMarginLeft = parseInt(btnStyle.marginLeft); //btnのmargin-left
+  const maxShadowSize = 20; //影のサイズ最大値
+  const shadowBlurSize = 25; //影のぼかしサイズ
+  const lightColor = '#ffffff'; //明かり
+  const darkColor = '#cccccc'; //影
+  const touchBgColor = '#fafafa'; //タッチしたときの背景色
+  const touchTextColor = '#d7d7d7'; //タッチしたときの文字色
+  const translateZ = 40; //文字を浮かび上がらせる度合い
+  const transformDeg = 30; //歪みの角度
+  const transformScale = 1.08; //スケールさせる割合
+  const scale3d = `${transformScale}, ${transformScale}, ${transformScale}`;
   const sp = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i); //スマホ・タブレットの判定
 
   // スマホ・タブレット or PC でボタンの文字列を変更
@@ -26,15 +36,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   }
   class Tilt {
     constructor(e) {
-      this.transformDeg = 30; //歪みの角度
-      this.transformScale = 1.08;
-      this.maxShadowSize = 20; //影のサイズ最大値
-      this.shadowBlurSize = 25; //影のぼかしサイズ
-      this.lightColor = '#ffffff'; //明かり
-      this.darkColor = '#cccccc'; //影
-      this.touchBgColor = '#fafafa'; //タッチしたときの背景色
-      this.touchTextColor = '#d7d7d7'; //タッチしたときの文字色
-      this.translateZ = 40; //文字を浮かび上がらせる度合い
       this.h = window.innerHeight; //画面の高さ(アドレスバーを除く)
       this.mouseX = e.offsetX; //0 <= mouseX <= width
       this.mouseY = e.offsetY; //0 <= mouseY <= height
@@ -50,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
       this.rateY = sp
         ? (this.touchY / btnH - 0.5) * 2
         : (this.mouseY / btnH - 0.5) * 2; //-1 <= rateY <= 1
-      this.scale3d = `${this.transformScale}, ${this.transformScale}, ${this.transformScale}`;
     }
     noScroll() {
       section.style.height = `${this.h}px`;
@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
       btnLink.style.color = btnLinkDefaultColor;
       btnLink.style.transform = btnLinkDefaultTransform;
     }
+    btnDefaultStyleSpGroup() {
+      this.btnDefaultStyle();
+      this.btnDefaultStyleSp();
+    }
     rotate(x, y, deg) {
       let result = [];
       if ((x <= 0 && y <= 0) || (x >= 0 && y >= 0)) {
@@ -76,12 +80,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
         result[1] = y * deg;
         return result;
       }
-      this.rotateX = this.rotate(this.rateX, this.rateY, this.transformDeg)[0];
-      this.rotateY = this.rotate(this.rateX, this.rateY, this.transformDeg)[1];
-      btn.style.transform = `scale3d(${this.scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
+      this.rotateX = this.rotate(this.rateX, this.rateY, transformDeg)[0];
+      this.rotateY = this.rotate(this.rateX, this.rateY, transformDeg)[1];
+      btn.style.transform = `scale3d(${scale3d}) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`;
     }
     shadow(x, y, size) {
-      let result = [this.maxShadowSize, this.maxShadowSize]; // 初期値
+      let result = [maxShadowSize, maxShadowSize]; // 初期値
       if ((x <= 0 && y <= 0) || (x <= 0 && y >= 0)) {
         result[0] = -x * size; //darkのx座標のオフセット
         result[1] = -y * size; //darkのy座標のオフセット
@@ -94,31 +98,27 @@ document.addEventListener('DOMContentLoaded', function (e) {
         result[2] = size + result[0];
         return result;
       }
-      this.shadowDarkX = this.shadow(
-        this.rateX,
-        this.rateY,
-        this.maxShadowSize
-      )[0];
-      this.shadowDarkY = this.shadow(
-        this.rateX,
-        this.rateY,
-        this.maxShadowSize
-      )[1];
+      this.shadowDarkX = this.shadow(this.rateX, this.rateY, maxShadowSize)[0];
+      this.shadowDarkY = this.shadow(this.rateX, this.rateY, maxShadowSize)[1];
       this.shadowLightXY = this.shadow(
         this.rateX,
         this.rateY,
-        this.maxShadowSize
+        maxShadowSize
       )[2];
-      btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${this.shadowBlurSize}px ${this.darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${this.shadowBlurSize}px ${this.lightColor}`;
+      btn.style.boxShadow = `${this.shadowDarkX}px ${this.shadowDarkY}px ${shadowBlurSize}px ${darkColor}, -${this.shadowLightXY}px -${this.shadowLightXY}px ${shadowBlurSize}px ${lightColor}`;
     }
     changeStyle() {
       this.rotate();
       this.shadow();
     }
     touchStyle() {
-      btn.style.backgroundColor = this.touchBgColor;
-      btnLink.style.color = this.touchTextColor;
-      btnLink.style.transform = `translateZ(${this.translateZ}px)`;
+      btn.style.backgroundColor = touchBgColor;
+      btnLink.style.color = touchTextColor;
+      btnLink.style.transform = `translateZ(${translateZ}px)`;
+    }
+    touchStyleGroup() {
+      this.changeStyle();
+      this.touchStyle();
     }
   }
 
@@ -154,40 +154,35 @@ document.addEventListener('DOMContentLoaded', function (e) {
   btn.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeStyle();
-    tiltbtn.touchStyle();
+    tiltbtn.touchStyleGroup();
   });
 
   // 指が動いているとき傾ける
   btn.addEventListener('touchmove', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.changeStyle();
-    tiltbtn.touchStyle();
+    tiltbtn.touchStyleGroup();
   });
 
   // タッチがキャンセルされたら元に戻す
   btn.addEventListener('touchcancel', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.btnDefaultStyle();
-    tiltbtn.btnDefaultStyleSp();
+    tiltbtn.btnDefaultStyleSpGroup();
   });
 
   // タッチが外れたら元に戻す
   btn.addEventListener('touchend', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.btnDefaultStyle();
-    tiltbtn.btnDefaultStyleSp();
+    tiltbtn.btnDefaultStyleSpGroup();
   });
 
   // 余白にタッチしたら元に戻す
   layer.addEventListener('touchstart', function (e) {
     e.preventDefault();
     const tiltbtn = new Tilt(e);
-    tiltbtn.btnDefaultStyle();
-    tiltbtn.btnDefaultStyleSp();
+    tiltbtn.btnDefaultStyleSpGroup();
   });
 
   // 画面のリサイズ時
